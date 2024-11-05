@@ -1,0 +1,11 @@
+size,number,thickness,lung_cancer
+big,low,deep,yes
+big,over,deep,yes
+normal,over,shallow,no
+big,low,shallow,no
+big,over,deep,yes
+normal,over,deep,yes
+big,low,shallow,no
+big,over,shallow,yes
+big,over,deep,yes
+normal,low,deep,no
