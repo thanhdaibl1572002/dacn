@@ -19,6 +19,7 @@ def evaluate_regression(df, target, my_model, sk_model):
     sk_model.fit(X_train, Y_train)
     sk_Y_pred = sk_model.predict(X_test)
     sk_time = time.time() - start_time
+    print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time:<25} {sk_time:<25}")
     print(f"{'MAE':<5} {mean_absolute_error(Y_test, my_Y_pred):<25} {mean_absolute_error(Y_test, sk_Y_pred):<25}")
     print(f"{'RMSE':<5} {root_mean_squared_error(Y_test, my_Y_pred):<25} {root_mean_squared_error(Y_test, sk_Y_pred):<25}")
@@ -34,6 +35,7 @@ def evaluate_classification(df, target, my_model, sk_model):
     sk_model.fit(X_train, Y_train)
     sk_Y_pred = sk_model.predict(X_test)
     sk_time = time.time() - start_time
+    print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time:<25} {sk_time:<25}")
     print(f"{'Acc':<5} {accuracy_score(Y_test, my_Y_pred):<25} {accuracy_score(Y_test, sk_Y_pred):<25}")
     print(f"{'F1':<5} {f1_score(Y_test, my_Y_pred, average='weighted'):<25} {f1_score(Y_test, sk_Y_pred, average='weighted'):<25}")
@@ -46,4 +48,5 @@ def evaluate_minmaxscaler(df, my_model, sk_model):
     start_time = time.time()
     sk_model.fit_transform(X_train)
     sk_time = time.time() - start_time
+    print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time:<25} {sk_time:<25}")
