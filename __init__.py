@@ -1,10 +1,11 @@
 import time
 import re
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
-from sklearn.metrics import accuracy_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
 from IPython.display import display, Markdown
 
 def split_data(df, target, test_size=0.2, random_state=42):
@@ -30,8 +31,6 @@ def evaluate_regression(df, target, my_model, sk_model):
     print(f"{'RMSE':<5} {root_mean_squared_error(Y_test, my_Y_pred):<25} {root_mean_squared_error(Y_test, sk_Y_pred):<25}")
     print(f"{'R2':<5} {r2_score(Y_test, my_Y_pred):<25} {r2_score(Y_test, sk_Y_pred):<25}")
 
-
-
 def evaluate_classification(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
     start_time = time.time()
@@ -47,10 +46,19 @@ def evaluate_classification(df, target, my_model, sk_model):
     print(f"{'Time':<5} {my_time:<25} {sk_time:<25}")
     print(f"{'Acc':<5} {accuracy_score(Y_test, my_Y_pred):<25} {accuracy_score(Y_test, sk_Y_pred):<25}")
     print(f"{'F1':<5} {f1_score(Y_test, my_Y_pred, average='weighted'):<25} {f1_score(Y_test, sk_Y_pred, average='weighted'):<25}")
-    print("\n**My Model Classification Report**")
-    print(classification_report(Y_test, my_Y_pred))
-    print("\n**SK Model Classification Report**")
-    print(classification_report(Y_test, sk_Y_pred))
+    cm_my = confusion_matrix(Y_test, my_Y_pred)
+    cm_sk = confusion_matrix(Y_test, sk_Y_pred)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    sns.heatmap(cm_my, annot=True, fmt='d', cmap='Blues', xticklabels=np.unique(Y_test), yticklabels=np.unique(Y_test), ax=axes[0])
+    axes[0].set_title('Confusion Matrix for My Model')
+    axes[0].set_xlabel('Predicted Label')
+    axes[0].set_ylabel('True Label')
+    sns.heatmap(cm_sk, annot=True, fmt='d', cmap='Blues', xticklabels=np.unique(Y_test), yticklabels=np.unique(Y_test), ax=axes[1])
+    axes[1].set_title('Confusion Matrix for SK Model')
+    axes[1].set_xlabel('Predicted Label')
+    axes[1].set_ylabel('True Label')
+    plt.tight_layout()
+    plt.show()
     accuracy_scores = [accuracy_score(Y_test, my_Y_pred), accuracy_score(Y_test, sk_Y_pred)]
     f1_scores = [f1_score(Y_test, my_Y_pred, average='weighted'), f1_score(Y_test, sk_Y_pred, average='weighted')]
     models = ['My Model', 'SK Model']
