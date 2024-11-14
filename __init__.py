@@ -57,9 +57,9 @@ def classification_data():
         "Classification Medium": pd.read_csv('classification_medium.csv'),
         "Classification Small": pd.read_csv('classification_small.csv')
     }
-    classification_new_datasets = pd.read_csv('classification_new.csv'),
+    classification_new = pd.read_csv('classification_new.csv'),
     classification_target = 'revenue'
-    return classification_datasets, classification_new_datasets, classification_target
+    return classification_datasets, classification_new, classification_target
 
 def classification_evaluate(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
