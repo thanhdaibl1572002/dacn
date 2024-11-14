@@ -50,16 +50,16 @@ def split_data(df, target, test_size=0.2, random_state=42):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=test_size, random_state=random_state)
     return X_train, X_test, Y_train, Y_test
 
-# =============================== CLASSIFICATION ===============================
-def classification_datasets():
-    datasets = {
+# =============================== CLASSIFICATION =============================== #
+def classification_data():
+    classification_datasets = {
         "Classification Big": pd.read_csv('classification_big.csv'),
         "Classification Medium": pd.read_csv('classification_medium.csv'),
         "Classification Small": pd.read_csv('classification_small.csv')
     }
-    new_datasets = pd.read_csv('classification_new.csv'),
-    target = 'revenue'
-    return datasets, new_datasets, target
+    classification_new_datasets = pd.read_csv('classification_new.csv'),
+    classification_target = 'revenue'
+    return classification_datasets, classification_new_datasets, classification_target
 
 def classification_evaluate(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
