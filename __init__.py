@@ -1,11 +1,13 @@
 import time
+import re
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
 from sklearn.metrics import accuracy_score, f1_score, classification_report
-from utils import split_data, display_model_name
+from IPython.display import display, Markdown
+from sklearn.model_selection import train_test_split
 
 # def evaluate_regression(df, target, my_model, sk_model):
 #     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
@@ -37,6 +39,18 @@ from utils import split_data, display_model_name
 #     print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
 #     print(f"{'Time':<5} {my_time:<25} {sk_time:<25}")
 
+
+def display_model_name(model):
+    model_name = ' '.join(re.findall(r'[A-Z][a-z]*', type(model).__name__))
+    display(Markdown(f"**{model_name}**"))
+    
+def split_data(df, target, test_size=0.2, random_state=42):
+    X = df.drop(columns=[target]).values
+    Y = df[target].values
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=test_size, random_state=random_state)
+    return X_train, X_test, Y_train, Y_test
+
+# =============================== CLASSIFICATION ===============================
 def classification_datasets():
     datasets = {
         "Classification Big": pd.read_csv('classification_big.csv'),
