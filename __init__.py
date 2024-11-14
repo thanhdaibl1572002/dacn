@@ -119,7 +119,7 @@ def regression_data():
         "Regression Small": pd.read_csv('dacn/regression_small.csv')
     }
     regression_new = pd.read_csv('dacn/regression_new.csv')
-    regression_target = 'revenue'
+    regression_target = 'rul'
     scaler = StandardScaler()
     for key in regression_datasets:
         X = regression_datasets[key].drop(columns=[regression_target])
