@@ -1,6 +1,7 @@
 import time
 import re
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
@@ -18,6 +19,15 @@ def split_data(df, target, test_size=0.2, random_state=42):
 
 def get_model_name(model):
     return ' '.join(re.findall(r'[A-Z][a-z]*', type(model).__name__))
+
+def sigmoid(z): 
+    return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
+
+def loss(predictions, actual, loss_type = 'regression'):
+    if loss_type == 'regression': 
+        return np.mean((predictions - actual) ** 2) 
+    elif loss_type == 'classification': 
+        return -np.mean(actual * np.log(predictions + 1e-15) + (1 - actual) * np.log(1 - predictions + 1e-15))
 
 # =============================== SCALER =============================== #
 def scaler_data():
@@ -72,6 +82,7 @@ def scaler_evaluates(my_model, sk_model):
     plt.show()
 
 # =============================== CLASSIFICATION =============================== #
+
 def classification_data():
     datasets = {
         "Classification Big": pd.read_csv('dacn/classification_big.csv'),
