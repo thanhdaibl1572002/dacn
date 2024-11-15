@@ -288,7 +288,7 @@ def regression_evaluates(my_model, sk_model):
     ax.set_xticklabels(dataset_names)
     ax.legend()
     plt.show()
-    
+
 def regression_predictions(my_model):
     _, new, target = regression_data()
     predictions = my_model.predict(new)
