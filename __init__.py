@@ -23,11 +23,13 @@ def get_model_name(model):
 def sigmoid(z): 
     return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
 
-def loss(predictions, actual, loss_type = 'regression'):
-    if loss_type == 'regression': 
-        return np.mean((predictions - actual) ** 2) 
-    elif loss_type == 'classification': 
-        return -np.mean(actual * np.log(predictions + 1e-15) + (1 - actual) * np.log(1 - predictions + 1e-15))
+def mse_loss(predictions, actual):
+    return np.mean((predictions - actual) ** 2)
+
+def cross_entropy_loss(predictions, actual):
+    epsilon = 1e-15
+    predictions = np.clip(predictions, epsilon, 1 - epsilon)
+    return -np.mean(actual * np.log(predictions) + (1 - actual) * np.log(1 - predictions))
 
 # =============================== SCALER =============================== #
 def scaler_data():
@@ -82,7 +84,6 @@ def scaler_evaluates(my_model, sk_model):
     plt.show()
 
 # =============================== CLASSIFICATION =============================== #
-
 def classification_data():
     datasets = {
         "Classification Big": pd.read_csv('dacn/classification_big.csv'),
@@ -118,10 +119,10 @@ def classification_evaluate(df, target, my_model, sk_model):
     sk_acc_percent = f"{accuracy_score(Y_test, sk_Y_pred) * 100:.3f} %"
     my_f1_percent = f"{f1_score(Y_test, my_Y_pred, average='weighted') * 100:.3f} %"
     sk_f1_percent = f"{f1_score(Y_test, sk_Y_pred, average='weighted') * 100:.3f} %"
-    print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
+    print(f"\n{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time_s:<25} {sk_time_s}")
     print(f"{'Acc':<5} {my_acc_percent:<25} {sk_acc_percent}")
-    print(f"{'F1':<5} {my_f1_percent:<25} {sk_f1_percent}")
+    print(f"{'F1':<5} {my_f1_percent:<25} {sk_f1_percent}\n")
     cr_my = classification_report(Y_test, my_Y_pred, output_dict=True)
     cr_sk = classification_report(Y_test, sk_Y_pred, output_dict=True)
     cr_my_df = pd.DataFrame(cr_my).transpose()
@@ -211,11 +212,11 @@ def regression_evaluate(df, target, my_model, sk_model):
     sk_rmse = f"{root_mean_squared_error(Y_test, sk_Y_pred):.3f}"
     my_r2 = f"{r2_score(Y_test, my_Y_pred):.3f}"
     sk_r2 = f"{r2_score(Y_test, sk_Y_pred):.3f}"
-    print(f"{'':<5} {'My Model':<25} {'SK Model':<25}")
+    print(f"\n{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time_s:<25} {sk_time_s}")
     print(f"{'MAE':<5} {my_mae:<25} {sk_mae}")
     print(f"{'RMSE':<5} {my_rmse:<25} {sk_rmse}")
-    print(f"{'R2':<5} {my_r2:<25} {sk_r2}")
+    print(f"{'R2':<5} {my_r2:<25} {sk_r2}\n")
     return my_time, sk_time, my_mae, sk_mae, my_rmse, sk_rmse, my_r2, sk_r2
 
 def regression_evaluates(my_model, sk_model):
