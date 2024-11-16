@@ -23,6 +23,10 @@ def get_model_name(model):
 def sigmoid(z): 
     return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
 
+def softmax(z): 
+    exp_z = np.exp(z - np.max(z, axis=1, keepdims=True)) 
+    return exp_z / np.sum(exp_z, axis=1, keepdims=True)
+
 def mse_loss(predictions, actual):
     return np.mean((predictions - actual) ** 2)
 
@@ -113,16 +117,16 @@ def classification_evaluate(df, target, my_model, sk_model):
     sk_model.fit(X_train, Y_train)
     sk_Y_pred = sk_model.predict(X_test)
     sk_time = time.time() - start_time
-    my_time_s = f"{my_time:.3f} s"
-    sk_time_s = f"{sk_time:.3f} s"
-    my_acc_percent = f"{accuracy_score(Y_test, my_Y_pred) * 100:.3f} %"
-    sk_acc_percent = f"{accuracy_score(Y_test, sk_Y_pred) * 100:.3f} %"
-    my_f1_percent = f"{f1_score(Y_test, my_Y_pred, average='weighted') * 100:.3f} %"
-    sk_f1_percent = f"{f1_score(Y_test, sk_Y_pred, average='weighted') * 100:.3f} %"
+    my_time_s = f"{my_time:.3f} (s)"
+    sk_time_s = f"{sk_time:.3f} (s)"
+    my_acc_percent = f"{accuracy_score(Y_test, my_Y_pred) * 100:.3f} (%)"
+    sk_acc_percent = f"{accuracy_score(Y_test, sk_Y_pred) * 100:.3f} (%)"
+    my_f1_score = f"{f1_score(Y_test, my_Y_pred, average='weighted'):.3f}"
+    sk_f1_score = f"{f1_score(Y_test, sk_Y_pred, average='weighted'):.3f}"
     print(f"\n{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time_s:<25} {sk_time_s}")
     print(f"{'Acc':<5} {my_acc_percent:<25} {sk_acc_percent}")
-    print(f"{'F1':<5} {my_f1_percent:<25} {sk_f1_percent}\n")
+    print(f"{'F1':<5} {my_f1_score:<25} {sk_f1_score}\n")
     cr_my = classification_report(Y_test, my_Y_pred, output_dict=True)
     cr_sk = classification_report(Y_test, sk_Y_pred, output_dict=True)
     cr_my_df = pd.DataFrame(cr_my).transpose()
