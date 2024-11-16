@@ -186,7 +186,7 @@ def regression_data():
         "Regression Small": pd.read_csv('dacn/regression_small.csv')
     }
     new = pd.read_csv('dacn/regression_new.csv')
-    target = 'rul'
+    target = 'ArrDelay'
     scaler = StandardScaler()
     for key in datasets:
         X = datasets[key].drop(columns=[target])
