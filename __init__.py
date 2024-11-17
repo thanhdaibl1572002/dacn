@@ -95,7 +95,7 @@ def classification_data():
         "Classification Small": pd.read_csv('dacn/classification_small.csv')
     }
     new = pd.read_csv('dacn/classification_new.csv')
-    target = 'Income'
+    target = 'HasDiabetes'
     scaler = StandardScaler()
     for key in datasets:
         X = datasets[key].drop(columns=[target])
