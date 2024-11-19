@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from IPython.display import display, Markdown
-from utils.classification_data import classification_data
-from utils.classification_evaluate import classification_evaluate
-from utils.model_name import model_name
+from dacn.utils.classification_data import classification_data
+from dacn.utils.classification_evaluate import classification_evaluate
+from dacn.utils.model_name import model_name
 def classification_evaluates(my_model, sk_model):
     datasets, _, target = classification_data()
     my_times = []

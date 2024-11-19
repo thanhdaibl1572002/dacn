@@ -1,6 +1,6 @@
 import time
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
-from utils.split_data import split_data
+from dacn.utils.split_data import split_data
 def regression_evaluate(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
     start_time = time.time()

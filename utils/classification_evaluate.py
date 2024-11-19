@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import accuracy_score, f1_score, classification_report
-from utils.split_data import split_data
+from dacn.utils.split_data import split_data
 def classification_evaluate(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
     start_time = time.time()

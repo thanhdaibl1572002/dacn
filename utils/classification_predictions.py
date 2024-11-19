@@ -1,6 +1,6 @@
 from IPython.display import display, Markdown
-from utils.classification_data import classification_data
-from utils.model_name import model_name
+from dacn.utils.classification_data import classification_data
+from dacn.utils.model_name import model_name
 def classification_predictions(my_model):
     _, new, target = classification_data()
     predictions = my_model.predict(new)

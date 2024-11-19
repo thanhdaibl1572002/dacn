@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from IPython.display import display, Markdown
-from utils.regression_data import regression_data
-from utils.regression_evaluate import regression_evaluate
-from utils.model_name import model_name
+from dacn.utils.regression_data import regression_data
+from dacn.utils.regression_evaluate import regression_evaluate
+from dacn.utils.model_name import model_name
 def regression_evaluates(my_model, sk_model):
     datasets, _, target = regression_data()
     my_times = []

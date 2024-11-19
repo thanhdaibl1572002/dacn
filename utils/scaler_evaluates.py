@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from IPython.display import display, Markdown
-from utils.scaler_data import scaler_data
-from utils.model_name import model_name
-from utils.scaler_evaluate import scaler_evaluate
+from dacn.utils.scaler_data import scaler_data
+from dacn.utils.model_name import model_name
+from dacn.utils.scaler_evaluate import scaler_evaluate
 def scaler_evaluates(my_model, sk_model):
     datasets = scaler_data()
     my_times = []
