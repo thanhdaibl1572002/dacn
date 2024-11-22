@@ -2,7 +2,7 @@ import time
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import accuracy_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
 from dacn.utils.split_data import split_data
 def classification_evaluate(df, target, my_model, sk_model):
     X_train, X_test, Y_train, Y_test = split_data(df, target=target)
@@ -24,6 +24,19 @@ def classification_evaluate(df, target, my_model, sk_model):
     print(f"{'Time':<5} {my_time_s:<25} {sk_time_s}")
     print(f"{'Acc':<5} {my_acc_percent:<25} {sk_acc_percent}")
     print(f"{'F1':<5} {my_f1_score:<25} {sk_f1_score}\n")
+    cm_my = confusion_matrix(Y_test, my_Y_pred)
+    cm_sk = confusion_matrix(Y_test, sk_Y_pred)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    sns.heatmap(cm_my, annot=True, fmt='d', cmap='Blues', ax=axes[0], cbar=False)
+    axes[0].set_title('Confusion Matrix for My Model')
+    axes[0].set_xlabel('Predicted Labels')
+    axes[0].set_ylabel('True Labels')
+    sns.heatmap(cm_sk, annot=True, fmt='d', cmap='Blues', ax=axes[1], cbar=False)
+    axes[1].set_title('Confusion Matrix for SK Model')
+    axes[1].set_xlabel('Predicted Labels')
+    axes[1].set_ylabel('True Labels')
+    plt.tight_layout()
+    plt.show()
     cr_my = classification_report(Y_test, my_Y_pred, output_dict=True)
     cr_sk = classification_report(Y_test, sk_Y_pred, output_dict=True)
     cr_my_df = pd.DataFrame(cr_my).transpose()

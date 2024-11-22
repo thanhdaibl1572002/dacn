@@ -11,6 +11,8 @@ def regression_evaluates(my_model, sk_model):
     sk_maes = []
     my_rmses = []
     sk_rmses = []
+    my_mses = []
+    sk_mses = []
     my_r2s = []
     sk_r2s = []
     dataset_names = []
@@ -24,8 +26,10 @@ def regression_evaluates(my_model, sk_model):
         sk_maes.append(results[3])
         my_rmses.append(results[4])
         sk_rmses.append(results[5])
-        my_r2s.append(results[6])
-        sk_r2s.append(results[7])
+        my_mses.append(results[6])
+        sk_mses.append(results[7])
+        my_r2s.append(results[8])
+        sk_r2s.append(results[9])
         dataset_names.append(dataset_name)
     display(Markdown(f"**{my_model_name} - Time Comparison**"))
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -57,6 +61,17 @@ def regression_evaluates(my_model, sk_model):
     ax.set_xlabel("Dataset Size")
     ax.set_ylabel("RMSE")
     ax.set_title("RMSE Comparison of My Model vs SK Model on Different Datasets")
+    ax.set_xticks([i + 0.2 for i in x])
+    ax.set_xticklabels(dataset_names)
+    ax.legend()
+    plt.show()
+    display(Markdown(f"**{my_model_name} - MSE Comparison**"))
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.bar(x, my_mses, width=0.4, label='My Model', align='center', color='skyblue')
+    ax.bar([i + 0.4 for i in x], sk_mses, width=0.4, label='SK Model', align='center', color='lightgreen')
+    ax.set_xlabel("Dataset Size")
+    ax.set_ylabel("MSE")
+    ax.set_title("MSE Comparison of My Model vs SK Model on Different Datasets")
     ax.set_xticks([i + 0.2 for i in x])
     ax.set_xticklabels(dataset_names)
     ax.legend()
