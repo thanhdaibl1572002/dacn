@@ -18,8 +18,8 @@ def classification_evaluate(df, target, my_model, sk_model):
     sk_time_s = f"{sk_time:.3f} (s)"
     my_acc_percent = f"{accuracy_score(Y_test, my_Y_pred) * 100:.3f} (%)"
     sk_acc_percent = f"{accuracy_score(Y_test, sk_Y_pred) * 100:.3f} (%)"
-    my_f1_score = f"{f1_score(Y_test, my_Y_pred, average='weighted'):.3f}"
-    sk_f1_score = f"{f1_score(Y_test, sk_Y_pred, average='weighted'):.3f}"
+    my_f1_score = f"{f1_score(Y_test, my_Y_pred, average='macro'):.3f}"
+    sk_f1_score = f"{f1_score(Y_test, sk_Y_pred, average='macro'):.3f}"
     print(f"\n{'':<5} {'My Model':<25} {'SK Model':<25}")
     print(f"{'Time':<5} {my_time_s:<25} {sk_time_s}")
     print(f"{'Acc':<5} {my_acc_percent:<25} {sk_acc_percent}")
