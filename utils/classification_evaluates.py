@@ -3,7 +3,7 @@ from IPython.display import display, Markdown
 from dacn.utils.classification_data import classification_data
 from dacn.utils.classification_evaluate import classification_evaluate
 from dacn.utils.model_name import model_name
-def classification_evaluates(my_model, sk_model):
+def classification_evaluates(my_model, sk_model, learning_curve=False):
     datasets, _, target = classification_data()
     my_times = []
     sk_times = []
@@ -11,7 +11,7 @@ def classification_evaluates(my_model, sk_model):
     my_model_name = model_name(my_model)
     for dataset_name, df in datasets.items():
         display(Markdown(f"**{my_model_name} - {dataset_name}**"))
-        my_time, sk_time = classification_evaluate(df, target, my_model, sk_model)
+        my_time, sk_time = classification_evaluate(df, target, my_model, sk_model, learning_curve)
         my_times.append(my_time)
         sk_times.append(sk_time)
         dataset_names.append(dataset_name)
